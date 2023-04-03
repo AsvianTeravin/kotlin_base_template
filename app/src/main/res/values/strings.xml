@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">kotlin_base_template</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_error">Something went wrong</string>
+    <string name="time_out">Time Out</string>
+    <string name="network_error">Network error</string>
+</resources>
