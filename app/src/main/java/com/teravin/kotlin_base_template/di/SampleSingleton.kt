@@ -1,11 +1,13 @@
 package com.teravin.kotlin_base_template.di
 
 import android.content.Context
-import com.teravin.kotlin_base_template.BuildConfig
+import androidx.room.Room
 import com.teravin.kotlin_base_template.R
 import com.teravin.kotlin_base_template.contract.FlavorContract
 import com.teravin.kotlin_base_template.contract.HttpContract
+import com.teravin.kotlin_base_template.database.Database
 import com.teravin.kotlin_base_template.util.TeravinFlow
+import com.teravin.support.BuildConfig
 import com.teravin.support.SecuredPreference
 import dagger.Module
 import dagger.Provides
@@ -14,6 +16,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
 import okhttp3.CipherSuite
 import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
@@ -116,5 +120,21 @@ class SampleSingleton {
 
     @Singleton
     @Provides
-    internal fun provideTeravinFlow(ioDispatcher: CoroutineDispatcher): TeravinFlow = TeravinFlow(ioDispatcher)
+    internal fun provideTeravinFlow(ioDispatcher: CoroutineDispatcher): TeravinFlow =
+        TeravinFlow(ioDispatcher)
+
+    @Singleton
+    @Provides
+    internal fun provideDatabase(@ApplicationContext context: Context): Database {
+        val builder = Room.databaseBuilder(
+            context,
+            Database::class.java,
+            Database.DB_NAME
+        ).fallbackToDestructiveMigration()
+
+        val factory = SupportFactory(SQLiteDatabase.getBytes("S@mpl3!~".toCharArray()))
+        builder.openHelperFactory(factory)
+        return builder.build()
+    }
+
 }

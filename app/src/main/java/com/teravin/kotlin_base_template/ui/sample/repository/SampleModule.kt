@@ -1,5 +1,7 @@
 package com.teravin.kotlin_base_template.ui.sample.repository
 
+import com.teravin.kotlin_base_template.database.Database
+import com.teravin.kotlin_base_template.database.sample.SampleDao
 import com.teravin.kotlin_base_template.util.TeravinFlow
 import dagger.Module
 import dagger.Provides
@@ -14,5 +16,12 @@ object SampleModule {
     fun provideSampleApi(retrofit: Retrofit): SampleApi = retrofit.create(SampleApi::class.java)
 
     @Provides
-    fun provideSampleRepository(api: SampleApi, flow: TeravinFlow): SampleRepository = SampleRepositoryImpl(api, flow)
+    fun provideSampleDao(database: Database): SampleDao = database.sampleDao()
+
+    @Provides
+    fun provideSampleRepository(
+        api: SampleApi,
+        sampleDao: SampleDao,
+        flow: TeravinFlow
+    ): SampleRepository = SampleRepositoryImpl(api, sampleDao, flow)
 }

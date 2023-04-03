@@ -1,24 +1,36 @@
 package com.teravin.kotlin_base_template.ui.sample
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.teravin.kotlin_base_template.databinding.SampleFragmentBinding
+import com.teravin.kotlin_base_template.util.LocalError
+import com.teravin.kotlin_base_template.util.TeravinFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SampleFragment : Fragment() {
-    private val viewModel by viewModels<SampleViewModel>()
+class SampleFragment : TeravinFragment<SampleFragmentBinding, SampleViewModel>() {
+    override val viewModel: SampleViewModel by viewModels()
+
+    override fun inflateBinding(
+        inflater: LayoutInflater
+    ): SampleFragmentBinding = SampleFragmentBinding.inflate(inflater)
+
+    override fun bindViewModel() {
+        viewDataBinding.viewModel = viewModel
+    }
+
+    override fun navigateToErrorScreen() {
+        val action =
+            SampleFragmentDirections.actionSampleFragmentToErrorFragment(LocalError("", 0, "", ""))
+        findNavController().navigate(action)
+
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        lifecycleScope.launch {
-            viewModel.errorState.collect {
-                // TODO: Navigate to Error Fragment
-            }
-        }
+        viewModel.getSampleFromDatabase()
     }
 }

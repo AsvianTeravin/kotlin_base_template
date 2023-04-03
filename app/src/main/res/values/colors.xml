@@ -7,4 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray">#C4C4C4</color>
+    <color name="orange">#FF9001</color>
+    <color name="red">#FF4200</color>
+    <color name="ocbc_color">#EA2F2A</color>
+    <color name="base_color">@color/ocbc_color</color>
+    <color name="ocean">#22b8cf</color>
+    <color name="green">#07F44A</color>
+    <color name="rippleColor">#DDDDDD</color>
+    <color name="liveness_background">#000000</color>
+    <color name="grey_back">#333333</color>
+    <color name="yellow">#FFEA32</color>
+    <color name="light_green">#88E668</color>
 </resources>
