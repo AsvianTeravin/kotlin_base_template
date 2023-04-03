@@ -16,7 +16,6 @@ class SampleViewModel @Inject constructor(private val repo: SampleRepositoryImpl
     TeravinViewModel() {
     private fun getSampleFromApi() {
         viewModelScope.launch {
-            coroutineContext
             repo.getSampleFromApi().collect {
                 when (it) {
                     is Resource.Error -> {

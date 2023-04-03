@@ -6,7 +6,6 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.teravin.kotlin_base_template.databinding.SampleFragmentBinding
-import com.teravin.kotlin_base_template.util.LocalError
 import com.teravin.kotlin_base_template.util.TeravinFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +23,7 @@ class SampleFragment : TeravinFragment<SampleFragmentBinding, SampleViewModel>()
 
     override fun navigateToErrorScreen() {
         val action =
-            SampleFragmentDirections.actionSampleFragmentToErrorFragment(LocalError("", 0, "", ""))
+            SampleFragmentDirections.actionSampleFragmentToErrorFragment(viewModel.errorState.value!!)
         findNavController().navigate(action)
 
     }
