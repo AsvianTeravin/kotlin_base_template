@@ -2,7 +2,7 @@ package com.teravin.kotlin_base_template.ui.sample.repository
 
 import com.teravin.kotlin_base_template.database.Database
 import com.teravin.kotlin_base_template.database.sample.SampleDao
-import com.teravin.kotlin_base_template.util.TeravinFlow
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,10 +18,10 @@ object SampleModule {
     @Provides
     fun provideSampleDao(database: Database): SampleDao = database.sampleDao()
 
-    @Provides
-    fun provideSampleRepository(
-        api: SampleApi,
-        sampleDao: SampleDao,
-        flow: TeravinFlow
-    ): SampleRepository = SampleRepositoryImpl(api, sampleDao, flow)
+    @Module
+    @InstallIn(ViewModelComponent::class)
+    abstract class SampleBinder {
+        @Binds
+        abstract fun bindSampleRepository(sampleRepository: SampleRepository): SampleRepository
+    }
 }
